@@ -1,0 +1,30 @@
+name: main
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      selection:
+        type: choice
+        description: Selection
+        options:
+          - thing1
+          - thing2
+      message:
+
+jobs:
+  code-version-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code version info
+        run: echo "Running on branch \"${GITHUB_REF##*/}\" at commit \"${GITHUB_SHA}\""
+  display-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display inputs
+        run: echo "selection = \"${{ inputs.selection }}\"" && echo "message = \"${{ inputs.message }}\""
+  build:
+    uses: ./.github/workflows/check-bats-version.yml
+    with:
+      thing: ${{ inputs.selection }}
+      alert: ${{ inputs.message }}
