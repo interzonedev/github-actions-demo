@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Display inputs
         run: echo "selection = \"${{ inputs.selection }}\"" && echo "message = \"${{ inputs.message }}\""
-  build:
+  check-bats-version:
     uses: ./.github/workflows/check-bats-version.yml
     with:
       thing: ${{ inputs.selection }}
